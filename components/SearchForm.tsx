@@ -63,6 +63,7 @@ const SearchForm: FC = () => {
       </form>
       <div>
         <h1>Articles</h1>
+        {articles.length}
         { /* fix data types */ }
         { articles.map((article: any, index: number) => {
           return (
