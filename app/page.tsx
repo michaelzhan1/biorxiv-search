@@ -1,7 +1,14 @@
-export default function Home() {
+import SearchForm from "@/components/SearchForm"
+import { FC } from 'react'
+
+
+const Home: FC = () => {
   return (
     <>
-      Hello, world!
+      <SearchForm />
     </>
   )
 }
+
+
+export default Home
