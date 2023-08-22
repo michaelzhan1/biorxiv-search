@@ -4,27 +4,7 @@
 import { FC, useState } from 'react'
 import Select from 'react-select'
 import { MultiValue } from 'react-select'
-
-
-interface CategoryOption {
-  value: string;
-  label: string;
-}
-
-
-interface Article {
-  doi: string;
-  title: string;
-  authors: string;
-  author_corresponding: string;
-  author_corresponding_institution: string;
-  date: string;
-  version: string;
-  category: string;
-  jatsxml: string;
-  abstract: string;
-  published: string;
-}
+import { CategoryOption, Article } from '@/types/biorxiv'
 
 
 const SearchForm: FC = () => {
