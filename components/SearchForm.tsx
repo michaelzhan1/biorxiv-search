@@ -1,11 +1,13 @@
 'use client'
 
 
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import Select from 'react-select'
 
 
 const SearchForm: FC = () => {
+  const [articles, setArticles] = useState<any[]>([])
+
   const allCategories: string[] = [
     'Animal Behavior and Cognition',
     'Biochemistry',
@@ -40,16 +42,37 @@ const SearchForm: FC = () => {
     return { value: category.toLowerCase(), label: category }
   });
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // fix data types
+    const res: Response = await fetch('/api/getData')
+    const data: any = await res.json()
+    setArticles(data)
+  }
+
   return (
     <>
-      <form>
+      <form onSubmit={ handleSubmit }>
         <label htmlFor="email">Email</label>
         <input type="text" placeholder="Email" name="email" />
         <label htmlFor="query">Search</label>
         <input type="text" placeholder="Search" name="query" />
         <label htmlFor="category">Categories</label>
-        <Select options={options} name="category" isMulti className='basic-multi-select' classNamePrefix='select' />
+        {/* <Select options={options} name="category" isMulti className='basic-multi-select' classNamePrefix='select' /> */}
+        <button type="submit">Submit</button>
       </form>
+      <div>
+        <h1>Articles</h1>
+        { /* fix data types */ }
+        { articles.map((article: any, index: number) => {
+          return (
+            <div key={index}>
+              <div>{article.title}</div>
+              <div>{article.doi}</div>
+            </div>
+          )
+        })}
+      </div>
     </>
   )
 };
