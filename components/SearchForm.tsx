@@ -2,11 +2,34 @@
 
 
 import { FC, useState } from 'react'
-// import Select from 'react-select'
+import Select from 'react-select'
+import { MultiValue } from 'react-select'
+
+
+interface CategoryOption {
+  value: string;
+  label: string;
+}
+
+
+interface Article {
+  doi: string;
+  title: string;
+  authors: string;
+  author_corresponding: string;
+  author_corresponding_institution: string;
+  date: string;
+  version: string;
+  category: string;
+  jatsxml: string;
+  abstract: string;
+  published: string;
+}
 
 
 const SearchForm: FC = () => {
   const [articles, setArticles] = useState<any[]>([])
+  const [categories, setCategories] = useState<string[]>([])
 
   const allCategories: string[] = [
     'Animal Behavior and Cognition',
@@ -38,7 +61,7 @@ const SearchForm: FC = () => {
     'Zoology',
   ]
 
-  const options: { [key: string]: string }[] = allCategories.map((category: string) => {
+  const options: CategoryOption[] = allCategories.map((category: string) => {
     return { value: category.toLowerCase(), label: category }
   });
 
@@ -50,9 +73,17 @@ const SearchForm: FC = () => {
       headers: {
         'Content-Type': 'application/json'
       },
+      body: JSON.stringify({
+        search: (event.currentTarget as HTMLFormElement).query.value,
+        categories: categories
+      })
     })
-    const data: any = await res.json()
+    const data: Article[] = await res.json()
     setArticles(data)
+  }
+
+  const handleSelectChange = (selected: MultiValue<CategoryOption> ) => {
+    setCategories(selected.map((category: CategoryOption) => category.value))
   }
 
   return (
@@ -63,14 +94,20 @@ const SearchForm: FC = () => {
         <label htmlFor="query">Search</label>
         <input type="text" placeholder="Search" name="query" />
         <label htmlFor="category">Categories</label>
-        {/* <Select options={options} name="category" isMulti className='basic-multi-select' classNamePrefix='select' /> */}
+        <Select options={options} isMulti className='basic-multi-select' classNamePrefix='select' onChange={handleSelectChange} />
         <button type="submit">Submit</button>
       </form>
+      { categories.map((category: string, index: number) => {
+        return (
+          <div key={index}>
+            <div>{category}</div>
+          </div>
+        )
+      })}
       <div>
         <h1>Articles</h1>
         {articles.length}
-        { /* fix data types */ }
-        { articles.map((article: any, index: number) => {
+        { articles.map((article: Article, index: number) => {
           return (
             <div key={index}>
               <div>{article.title}</div>
