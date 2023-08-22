@@ -2,7 +2,7 @@
 
 
 import { FC, useState } from 'react'
-import Select from 'react-select'
+// import Select from 'react-select'
 
 
 const SearchForm: FC = () => {
@@ -45,7 +45,12 @@ const SearchForm: FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // fix data types
-    const res: Response = await fetch('/api/getData')
+    const res: Response = await fetch('/api/getData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
     const data: any = await res.json()
     setArticles(data)
   }

@@ -1,4 +1,4 @@
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   // Returns all bioRxiv articles from the last week
   const endDay: Date = new Date();
   const startDay: Date = new Date();
