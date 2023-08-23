@@ -48,10 +48,6 @@ export async function POST(request: Request) {
   console.log(`Searching for ${search} in ${categories}`)
 
   for (let article of articles) {
-    // not adding all the articles, something wrong with word search. ex title below missed
-    if (article.title.startsWith('Gene editing in the Chagas disease vector')) {
-      console.log(article.title)
-    }
     let valid: boolean = true;
     if (categories.includes(article.category) || categories.length === 0) {
       for (let word of search) {
