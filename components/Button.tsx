@@ -3,7 +3,7 @@
 
 const handleClick = async () => {
   await fetch('/api/getData', {
-    method: 'POST',
+    method: 'GET',
   })
 }
 
