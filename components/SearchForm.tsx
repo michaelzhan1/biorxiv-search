@@ -47,18 +47,19 @@ const SearchForm: FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const res: Response = await fetch('/api/getData', {
+    const res: Response = await fetch('/api/editFilter', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        email: (event.currentTarget as HTMLFormElement).email.value,
         search: (event.currentTarget as HTMLFormElement).query.value,
         categories: categories
       })
     })
-    const data: Article[] = await res.json()
-    setArticles(data)
+    // const data: Article[] = await res.json()
+    // setArticles(data)
   }
 
   const handleSelectChange = (selected: MultiValue<CategoryOption> ) => {
