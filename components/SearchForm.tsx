@@ -6,6 +6,11 @@ import Select from 'react-select'
 import { MultiValue } from 'react-select'
 import { CategoryOption, Article } from '@/types/biorxiv'
 
+type FilterResponse = {
+  error: string | null,
+  message: string | null
+}
+
 
 const SearchForm: FC = () => {
   const [articles, setArticles] = useState<any[]>([])
@@ -58,9 +63,19 @@ const SearchForm: FC = () => {
         categories: categories
       })
     })
-    // const data: Article[] = await res.json()
-    // setArticles(data)
+    const data: FilterResponse = await res.json()
+    if (data.error) {
+      console.log(data.error)
+      alert(data.error)
+    } else {
+      console.log(data.message)
+      alert(data.message)
+    }
   }
+
+  // used to get the articles, run in weekly cron
+  // const data: Article[] = await res.json()
+  // setArticles(data)
 
   const handleSelectChange = (selected: MultiValue<CategoryOption> ) => {
     setCategories(selected.map((category: CategoryOption) => category.value))
@@ -75,18 +90,10 @@ const SearchForm: FC = () => {
         <input type="text" placeholder="Search" name="query" />
         <label htmlFor="category">Categories</label>
         <Select options={options} isMulti className='basic-multi-select' classNamePrefix='select' onChange={handleSelectChange} />
-        <button type="submit">Submit</button>
+        <button type="submit">Set Filter</button>
       </form>
-      { categories.map((category: string, index: number) => {
-        return (
-          <div key={index}>
-            <div>{category}</div>
-          </div>
-        )
-      })}
       <div>
         <h1>Articles</h1>
-        {articles.length}
         { articles.map((article: Article, index: number) => {
           return (
             <div key={index}>

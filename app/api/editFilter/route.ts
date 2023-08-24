@@ -16,6 +16,8 @@ export async function POST(request: Request) {
   const categoryList: string[] = body.categories;
   const categories: string = categoryList.join(';');
 
+  let message: string;
+
   const client: PoolClient = await pool.connect();
   try {
     await client.query('BEGIN')
@@ -28,8 +30,10 @@ export async function POST(request: Request) {
     const existingFilter: QueryResult = await client.query('SELECT * FROM filters WHERE id = $1', [id])
     if (existingFilter.rowCount === 0) {
       await client.query('INSERT INTO filters (id, query, categories) VALUES ($1, $2, $3)', [id, search, categories])
+      message = `Filter added for ${email}`
     } else {
       await client.query('UPDATE filters SET query = $1, categories = $2 WHERE id = $3', [search, categories, id])
+      message = `Filter updated for ${email}`
     }
     console.log('Filter updated/added')
     await client.query('COMMIT')
@@ -38,12 +42,12 @@ export async function POST(request: Request) {
     await client.query('ROLLBACK')
     client.release()
     console.log('Error', e.message)
-    return new Response(JSON.stringify({ error: e.message }), {
+    return new Response(JSON.stringify({ error: e.message, message: null }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     })
   }
-  return new Response(JSON.stringify({ success: true }), {
+  return new Response(JSON.stringify({ error: null, message: message }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   })
