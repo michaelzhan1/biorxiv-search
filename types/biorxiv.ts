@@ -33,3 +33,8 @@ export interface Biorxiv {
   collection: Article[];
   messages: Message[];
 }
+
+export interface User {
+  id: number;
+  email: string;
+}
