@@ -32,3 +32,27 @@ export async function GET() {
     });
   }
 }
+
+
+export async function DELETE(request: Request) {
+  const rawId: string = await request.text();
+  const id: number = parseInt(rawId);
+  console.log(`Deleting user ${id}`);
+  const client: PoolClient = await pool.connect();
+  try {
+    await client.query('DELETE FROM users WHERE id = $1', [id]);
+    await client.query('DELETE FROM filters WHERE id = $1', [id]);
+    client.release();
+    return new Response(JSON.stringify({ error: null }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (e: any) {
+    console.error(e);
+    client.release();
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}

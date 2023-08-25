@@ -9,6 +9,15 @@ interface RequestBody {
 }
 
 
+export async function GET(request: Request) {
+  const body = await request.json()
+  return new Response(JSON.stringify({ error: null, message: 'Hello world' }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  })
+}
+
+
 export async function POST(request: Request) {
   const body: RequestBody = await request.json();
   const email: string = body.email;

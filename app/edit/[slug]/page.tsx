@@ -1,5 +1,6 @@
 import { User } from '@/types/biorxiv'
 import { redirect } from 'next/navigation'
+import DeleteButton from '@/components/edit/DeleteButton'
 
 
 interface UserData {
@@ -9,7 +10,9 @@ interface UserData {
 
 
 async function getData(): Promise<User[]> {
-  const res: Response = await fetch(process.env.API_URL + '/api/getUsers')
+  const res: Response = await fetch(process.env.API_URL + '/api/users', {
+    cache: 'no-cache',
+  })
   const data: UserData = await res.json()
   if (data.error) {
     throw new Error(data.error)
@@ -18,7 +21,17 @@ async function getData(): Promise<User[]> {
 }
 
 
-export default async function Page({ params }: { params: { slug: string } }) {
+async function test() {
+  const res = await fetch(process.env.API_URL + '/api/editFilter', {
+    body: JSON.stringify({
+      id: '2'
+    })
+  })
+}
+
+
+export default async function Page({ params }: { params: { slug: string } }): Promise<JSX.Element> {
+  await test()
   const users: User[] = await getData()
   const user: User | undefined = users.find((user: User) => user.id.toString() === params.slug)
   if (!user) {
@@ -27,6 +40,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <div>
       <h1>Welcome, {user.email}</h1>
+      <DeleteButton id={user.id.toString()} />
     </div>
   )
 }

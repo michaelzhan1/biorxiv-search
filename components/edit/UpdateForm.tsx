@@ -1,10 +1,10 @@
 'use client'
 
 
-import { FC, useState } from 'react'
-import Select from 'react-select'
+import { useState } from 'react'
+import { CategoryOption } from '@/types/biorxiv'
 import { MultiValue } from 'react-select'
-import { CategoryOption, Article } from '@/types/biorxiv'
+import Select from 'react-select'
 
 
 type FilterResponse = {
@@ -13,7 +13,7 @@ type FilterResponse = {
 }
 
 
-const SearchForm: FC = () => {
+export default function UpdateForm ({ email }: { email: string }): JSX.Element {
   const [articles, setArticles] = useState<any[]>([])
   const [categories, setCategories] = useState<string[]>([])
 
@@ -59,7 +59,7 @@ const SearchForm: FC = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: (event.currentTarget as HTMLFormElement).email.value,
+        email: email,
         search: (event.currentTarget as HTMLFormElement).query.value,
         categories: categories
       })
@@ -74,10 +74,6 @@ const SearchForm: FC = () => {
     }
   }
 
-  // used to get the articles, run in weekly cron
-  // const data: Article[] = await res.json()
-  // setArticles(data)
-
   const handleSelectChange = (selected: MultiValue<CategoryOption> ) => {
     setCategories(selected.map((category: CategoryOption) => category.value))
   }
@@ -85,27 +81,12 @@ const SearchForm: FC = () => {
   return (
     <>
       <form onSubmit={ handleSubmit }>
-        <label htmlFor="email">Email</label>
-        <input type="text" placeholder="Email" name="email" />
         <label htmlFor="query">Search</label>
         <input type="text" placeholder="Search" name="query" />
         <label htmlFor="category">Categories</label>
         <Select options={options} isMulti className='basic-multi-select' classNamePrefix='select' onChange={handleSelectChange} />
         <button type="submit">Set Filter</button>
       </form>
-      <div>
-        <h1>Articles</h1>
-        { articles.map((article: Article, index: number) => {
-          return (
-            <div key={index}>
-              <div>{article.title}</div>
-              <div>{article.doi}</div>
-            </div>
-          )
-        })}
-      </div>
     </>
   )
 };
-
-export default SearchForm;
