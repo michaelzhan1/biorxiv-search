@@ -74,10 +74,6 @@ const SearchForm: FC = () => {
     }
   }
 
-  // used to get the articles, run in weekly cron
-  // const data: Article[] = await res.json()
-  // setArticles(data)
-
   const handleSelectChange = (selected: MultiValue<CategoryOption> ) => {
     setCategories(selected.map((category: CategoryOption) => category.value))
   }
