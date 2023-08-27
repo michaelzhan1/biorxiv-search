@@ -1,4 +1,4 @@
-import SearchForm from "@/components/SearchForm"
+import NewFilter from "@/components/NewFilter"
 import TestGetButton from "@/components/TestGetButton"
 import { FC } from 'react'
 
@@ -6,7 +6,7 @@ import { FC } from 'react'
 const Home: FC = () => {
   return (
     <>
-      <SearchForm />
+      <NewFilter />
       <TestGetButton />
     </>
   )
