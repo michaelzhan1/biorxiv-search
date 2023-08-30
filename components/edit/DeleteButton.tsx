@@ -2,25 +2,22 @@
 
 
 import { useRouter } from 'next/navigation'
+import { DeleteUserResponse } from '@/types/frontend'
 
 
-export default function DeleteButton ({ id }: { id: string}) {
+export default function DeleteButton ({ id }: { id: string }) {
   const router = useRouter()
 
   async function handleDelete () {
     if (confirm('Are you sure you want to unsubscribe?')) {
-      let apiUrl: string = '/api/users/'
-      if (process.env.API_URL) {
-        apiUrl = process.env.API_URL + apiUrl
-      }
-      const res: Response = await fetch(apiUrl, {
+      const res: Response = await fetch('/api/users', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'text/plain'
         },
         body: id
       })
-      const data: { error: string | null } = await res.json()
+      const data: DeleteUserResponse = await res.json()
       if (data.error) {
         console.log(data.error)
         alert(data.error)

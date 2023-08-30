@@ -2,19 +2,21 @@
 
 
 import { useState } from 'react'
-import { CategoryOption } from '@/types/biorxiv'
+import { CategoryOption, UpdateUserResponse } from '@/types/frontend'
 import { MultiValue } from 'react-select'
 import Select from 'react-select'
 
 
-type FilterResponse = {
-  error: string | null,
-  message: string | null
+function titleCase (s: string): string {
+  return s.split(' ').map((word: string) => word[0].toUpperCase() + word.slice(1)).join(' ')
 }
 
 
-export default function UpdateForm ({ email }: { email: string }): JSX.Element {
-  const [articles, setArticles] = useState<any[]>([])
+export default function UpdateForm ({ email, search, defaultCategories }: { email: string, search: string, defaultCategories: string }): JSX.Element {
+  const defaultCategoryOptions: CategoryOption[] = defaultCategories.split(';').map((category: string) => {
+    return { value: category.toLowerCase(), label: titleCase(category) }
+  })
+
   const [categories, setCategories] = useState<string[]>([])
 
   const allCategories: string[] = [
@@ -53,26 +55,27 @@ export default function UpdateForm ({ email }: { email: string }): JSX.Element {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const res: Response = await fetch('/api/editFilter', {
-      method: 'POST',
+    const res: Response = await fetch('/api/users', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         email: email,
-        search: (event.currentTarget as HTMLFormElement).query.value,
+        search: (event.currentTarget as HTMLFormElement).search.value,
         categories: categories
       })
     })
-    const data: FilterResponse = await res.json()
+    const data: UpdateUserResponse = await res.json()
     if (data.error) {
       console.log(data.error)
       alert(data.error)
     } else {
-      console.log(data.message)
-      alert(data.message)
+      console.log(`User ${email} updated`)
+      alert(`User ${email} updated`)
     }
   }
+
 
   const handleSelectChange = (selected: MultiValue<CategoryOption> ) => {
     setCategories(selected.map((category: CategoryOption) => category.value))
@@ -82,9 +85,9 @@ export default function UpdateForm ({ email }: { email: string }): JSX.Element {
     <>
       <form onSubmit={ handleSubmit }>
         <label htmlFor="query">Search</label>
-        <input type="text" placeholder="Search" name="query" />
+        <input type="text" placeholder="Search" name="search" defaultValue={search}/>
         <label htmlFor="category">Categories</label>
-        <Select options={options} isMulti className='basic-multi-select' classNamePrefix='select' onChange={handleSelectChange} />
+        <Select options={options} isMulti className='basic-multi-select' classNamePrefix='select' onChange={handleSelectChange} defaultValue={defaultCategoryOptions}/>
         <button type="submit">Set Filter</button>
       </form>
     </>

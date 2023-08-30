@@ -90,7 +90,7 @@ export async function POST(request: Request) {
 }
 
 
-export async function UPDATE(request: Request) {
+export async function PUT(request: Request) {
   const body: NewUser = await request.json();
   const email: string = body.email;
   const search: string = body.search;
