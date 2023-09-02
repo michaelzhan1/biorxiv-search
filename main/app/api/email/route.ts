@@ -1,4 +1,8 @@
 import nodemailer from 'nodemailer';
+import { CronJob } from 'cron';
+
+
+let activeJob = false;
 
 
 const transporter = nodemailer.createTransport({
@@ -18,13 +22,29 @@ const mailOptions = {
 };
 
 
-export async function POST() {
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('email sent: ' + info.response);
-    }
-  });
-  return new Response('email sent');
+function sendEmail() {
+  // pull api data
+  // set articles in variable in data route
+  // send email
+  // in email slug, pull articles from data route
 }
+
+
+export async function POST() {
+  if (!activeJob) {
+    activeJob = true;
+
+  }
+}
+
+
+// export async function POST() {
+//   transporter.sendMail(mailOptions, (error, info) => {
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       console.log('email sent: ' + info.response);
+//     }
+//   });
+//   return new Response('email sent');
+// }
