@@ -1,6 +1,5 @@
 import NewFilter from "@/components/NewFilter"
 import EmailButton from "@/components/email/EmailButton"
-import TestTest from "@/components/TestTest"
 
 
 export default function Home() {
@@ -8,7 +7,6 @@ export default function Home() {
     <>
       <NewFilter />
       <EmailButton />
-      <TestTest />
     </>
   )
 }
