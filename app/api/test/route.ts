@@ -1,9 +1,9 @@
-import { CronJob } from 'cron'
-
 export async function GET() {
-  const job = new CronJob('*/5 * * * * *', () => {
-    console.log('You will see this message every second')
+  console.log('test called')
+  return new Response('hello world', {
+    headers: {
+      'content-type': 'text/plain',
+      'Access-Control-Allow-Origin': '*',
+    },
   })
-  job.start()
-  return new Response('hello world')
 }
