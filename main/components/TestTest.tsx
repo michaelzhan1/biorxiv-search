@@ -6,6 +6,7 @@ export default function TestTest() {
     await fetch('/api/test', {
       cache: 'no-cache',
     })
+    console.log('test click')
   }
   return (
     <>
