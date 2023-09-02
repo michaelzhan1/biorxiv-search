@@ -3,8 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-const url = process.env.API_URL + '/api/test';
-console.log(url)
+const url = process.env.API_URL + '/api/email';
 
 async function callApi() {
   const response = await fetch(url, {

@@ -23,6 +23,7 @@ const mailOptions = {
 
 
 function sendEmail() {
+  console.log('send email called')
   // pull api data
   // set articles in variable in data route
   // send email
@@ -33,8 +34,27 @@ function sendEmail() {
 export async function POST() {
   if (!activeJob) {
     activeJob = true;
-
+    const job = new CronJob('*/5 * * * * *', () => {
+      sendEmail();
+    });
+    job.start();
+    return new Response('Cron job started', {
+      headers: {
+        'content-type': 'text/plain',
+        'Access-Control-Allow-Origin': '*',
+      },
+      status: 200,
+    })
+  } else {
+    return new Response('Cron job already active', {
+      headers: {
+        'content-type': 'text/plain',
+        'Access-Control-Allow-Origin': '*',
+      },
+      status: 200,
+    })
   }
+
 }
 
 
