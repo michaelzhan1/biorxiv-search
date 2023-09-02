@@ -6,7 +6,9 @@ dotenv.config();
 const url = process.env.API_URL + '/api/test';
 
 async function callApi() {
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    cache: 'no-cache',
+  });
   const data = await response.text();
   console.log(data);
 }
