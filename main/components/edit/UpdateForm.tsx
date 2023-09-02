@@ -13,9 +13,9 @@ function titleCase (s: string): string {
 
 
 export default function UpdateForm ({ email, search, defaultCategories }: { email: string, search: string, defaultCategories: string }): JSX.Element {
-  const defaultCategoryOptions: CategoryOption[] = defaultCategories.split(';').map((category: string) => {
+  const defaultCategoryOptions: CategoryOption[] = defaultCategories ? defaultCategories.split(';').map((category: string) => {
     return { value: category.toLowerCase(), label: titleCase(category) }
-  })
+  }) : []
 
   const [categories, setCategories] = useState<string[]>([])
 

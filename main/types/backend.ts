@@ -38,3 +38,9 @@ export interface Biorxiv {
   collection: Article[];
   messages: Message[];
 }
+
+
+export interface DataStatusResponse {
+  error: string | null;
+  result: string | null;
+}
