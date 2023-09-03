@@ -1,7 +1,7 @@
 import { User, Article, Biorxiv } from '@/types/backend'
 
 
-let allArticles: Article[];
+let allArticles: Article[] = [];
 
 async function getAllArticles(): Promise<Article[]> {
   const endDay: Date = new Date();
@@ -61,9 +61,9 @@ export async function POST(request: Request) {
   try {
     const body: User = await request.json();
     const email: string = body.email;
-    const search: string = body.search;
+    const search: string[] = body.search.split(' ');
     const categories: string[] = body.categories.split(';').filter((category) => category !== '');
-    console.log(`Searching articles for user ${email} with search ${search} in categories ${categories}`)
+    console.log(`Searching articles for user ${email} with search "${search}" in categories "${categories}"`)
     const result: Article[] = [];
 
     for (let article of allArticles) {

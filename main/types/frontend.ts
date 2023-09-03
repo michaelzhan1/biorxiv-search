@@ -1,4 +1,4 @@
-import { User } from './backend';
+import { User, Article } from './backend';
 
 
 export interface CategoryOption {
@@ -26,4 +26,10 @@ export interface DeleteUserResponse {
 
 export interface UpdateUserResponse {
   error: string | null;
+}
+
+
+export interface ArticleResponse {
+  error: string | null;
+  result: Article[] | null;
 }

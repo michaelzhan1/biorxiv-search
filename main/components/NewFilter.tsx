@@ -78,7 +78,7 @@ export default function NewFilter () {
         <label htmlFor="email">Email</label>
         <input type="text" placeholder="Email" name="email" />
         <label htmlFor="search">Search</label>
-        <input type="text" placeholder="Search" name="search" />
+        <input type="text" placeholder="Search" name="search" required/>
         <label htmlFor="category">Categories</label>
         <Select options={options} isMulti className='basic-multi-select' classNamePrefix='select' onChange={ handleSelectChange } />
         <button type="submit">Set Filter</button>
