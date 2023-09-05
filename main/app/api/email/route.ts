@@ -88,6 +88,7 @@ export async function POST() {
       await sendEmails();
     }, null, true, 'America/Chicago');
     job.start();
+    console.log('Cron job started');
     return new Response('Cron job started', {
       headers: {
         'content-type': 'text/plain',
