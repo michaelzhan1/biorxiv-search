@@ -90,7 +90,7 @@ export default function NewFilter () {
               <input type="text" placeholder="Email" name="email"  className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'/>
             </div>
             <div className='mb-3'>
-              <label htmlFor="search" className='block font-bold text-sm text-gray-700 mb-2'>Search</label>
+              <label htmlFor="search" className='block font-bold text-sm text-gray-700 mb-2'>Search Keywords</label>
               <input type="text" placeholder="Search" name="search" required className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'/>
             </div>
             <div className='mb-6'>

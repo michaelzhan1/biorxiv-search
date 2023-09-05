@@ -31,6 +31,6 @@ export default function DeleteButton ({ id }: { id: string }) {
 
 
   return (
-    <button onClick={handleDelete}>Unsubscribe</button>
+    <button onClick={handleDelete} type='button' className='bg-red-500 hover:bg-red-600 text-white rounded-md px-3 py-2 font-bold'>Unsubscribe</button>
   )
 }

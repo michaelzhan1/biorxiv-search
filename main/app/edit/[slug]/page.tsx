@@ -30,9 +30,7 @@ export default async function Page({ params }: { params: { slug: string } }): Pr
   }
   return (
     <div>
-      <h1>Welcome, {user.email}</h1>
-      <UpdateForm email={user.email} search={user.search} defaultCategories={user.categories} />
-      <DeleteButton id={user.id.toString()} />
+      <UpdateForm email={user.email} search={user.search} defaultCategories={user.categories} id={user.id.toString()} />
     </div>
   )
 }
