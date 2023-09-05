@@ -68,6 +68,19 @@ async function sendEmails(): Promise<null> {
 }
 
 
+export async function GET() {
+  await sendEmails();
+  return new Response('Emails sent', {
+    headers: {
+      'content-type': 'text/plain',
+      'Access-Control-Allow-Origin': '*',
+    },
+    status: 200,
+  })
+}
+
+
+
 export async function POST() {
   if (!activeJob) {
     activeJob = true;

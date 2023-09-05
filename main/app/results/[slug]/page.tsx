@@ -54,15 +54,15 @@ export default async function Page({ params }: { params: { slug: string } }): Pr
   // results page, call to POST on /api/data
   return (
     <>
-      <h1>Welcome, {user.email}</h1>
-      <p>{articles.length} articles found</p>
+      <h1 className='font-bold text-xl'>Welcome, {user.email}</h1>
+      <p className='mb-3'>{articles.length} articles found</p>
     {articles.map((article: Article, id: number) => {
       return (
         <div key={id}>
-          <h1>{article.title}</h1>
-          <p>{article.authors}</p>
-          <p>{article.doi}</p>
-          <p>{article.abstract}</p>
+          <h1 className='font-bold text-lg'>{article.title}</h1>
+          <p className='italic'>{article.authors}</p>
+          <a href={`https://doi.org/${article.doi}`} className='text-blue-500 hover:text-blue-700 hover:underline'>{article.doi}</a>
+          <p className='text-sm mb-3'>{article.abstract}</p>
         </div>
       )
       })}
