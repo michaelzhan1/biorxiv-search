@@ -18,7 +18,6 @@ async function getAllArticles(): Promise<Article[]> {
 
   const start: string = `${startYear}-${startMonth < 10 ? '0' + startMonth.toString() : startMonth}-${startDayOfMonth < 10 ? '0' + startDayOfMonth.toString() : startDayOfMonth}`;
   const end: string = `${endYear}-${endMonth < 10 ? '0' + endMonth.toString() : endMonth}-${endDayOfMonth < 10 ? '0' + endDayOfMonth.toString() : endDayOfMonth}`;
-  console.log(end)
 
   let count: number = 0;
   let total: number;

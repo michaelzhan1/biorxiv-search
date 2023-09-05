@@ -7,6 +7,8 @@ import { MultiValue } from 'react-select'
 import { CategoryOption, NewUserResponse } from '@/types/frontend'
 
 
+const emailRegex = new RegExp('^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
+
 
 export default function NewFilter () {
   const [categories, setCategories] = useState<string[]>([])
@@ -47,6 +49,11 @@ export default function NewFilter () {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!emailRegex.test((event.currentTarget as HTMLFormElement).email.value)) {
+      alert('Please enter a valid email address')
+      return
+    }
+
     const res: Response = await fetch('/api/users', {
       method: 'POST',
       headers: {

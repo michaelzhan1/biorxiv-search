@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 import { CronJob } from 'cron';
 import { DataStatusResponse, User } from '@/types/backend';
 import { UserResponse } from '@/types/frontend';
+import { emailTemplate } from './emailTemplate';
 
 
 let activeJob = false;
@@ -18,10 +19,10 @@ const transporter = nodemailer.createTransport({
 
 
 const mailOptions = {
-  from: process.env.GMAIL_ALIAS,
+  from: `BioRxiv Newsletter <${process.env.GMAIL_ALIAS}>`,
   to: '',
   subject: 'Biorxiv articles',
-  text: '',
+  html: '',
 };
 
 
@@ -54,8 +55,8 @@ async function sendEmails(): Promise<null> {
   for (let user of users) {
     console.log(`Sending email to ${user.email}`);
     mailOptions.to = user.email;
-    mailOptions.text = `Articles for ${user.email}: <a href="${process.env.API_URL}/results/${user.id}>Results</a>"\n<a href="${process.env.API_URL}/edit/${user.id}>Edit pref</a>"`
-    await transporter.sendMail(mailOptions, (error, info) => {
+    mailOptions.html = emailTemplate(user.id);
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error(error);
       } else {
@@ -67,24 +68,13 @@ async function sendEmails(): Promise<null> {
 }
 
 
-
-
-  // pull api data (done)
-  // now, have button to check that articles are updated
-  // set articles in variable in data route
-  // send email
-  // in email slug, pull articles from data route
-
-
-
 export async function POST() {
   if (!activeJob) {
-    await sendEmails();
-    // activeJob = true;
-    // const job = new CronJob('* */5 * * * *', async () => {
-    //   await sendEmails();
-    // });
-    // job.start();
+    activeJob = true;
+    const job = new CronJob('0 0 8 * * 1', async () => {
+      await sendEmails();
+    }, null, true, 'America/Chicago');
+    job.start();
     return new Response('Cron job started', {
       headers: {
         'content-type': 'text/plain',
