@@ -1,13 +1,22 @@
 import { createClient, getAllUserInfo } from '../utils/db.js';
 
-export async function getUsers(req, res) {
+async function getUsers(req, res) {
   const result = await getAllUserInfo();
   res.json(result);
 }
 
-export async function postUsers(req, res) {
-  const { email, search } = req.body;
+async function postUsers(req, res) {
+  const { email } = req.body;
+  const searchTemp = req.body.search.split(' ');
   const categories = req.body.categories.join(';');
+
+  const searchArray = [];
+  for (let word of searchTemp) {
+    if (word.length > 0) {
+      searchArray.push(word);
+    }
+  }
+  const search = searchArray.join(';');
 
   if (!email) {
     return res.status(400).json({ message: 'Missing email' });
@@ -51,7 +60,7 @@ export async function postUsers(req, res) {
   res.status(status).json({ message });
 }
 
-export async function deleteUsers(req, res) {
+async function deleteUsers(req, res) {
   const id = parseInt(req.body.id);
   if (!id) {
     return res.status(400).json({ message: 'Invalid id' });
@@ -64,3 +73,5 @@ export async function deleteUsers(req, res) {
 
   res.json({ message: `User id ${id} deleted` });
 }
+
+export { getUsers, postUsers, deleteUsers };

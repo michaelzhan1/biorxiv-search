@@ -4,13 +4,13 @@ import dotenv from "dotenv";
 const { Client } = pg;
 dotenv.config();
 
-export function createClient() {
+function createClient() {
   return new Client({
     connectionString: process.env.DATABASE_URL,
   });
 }
 
-export async function getAllUserInfo() {
+async function getAllUserInfo() {
   const client = createClient();
   await client.connect();
   const result = await client.query('SELECT * FROM users');
@@ -18,3 +18,5 @@ export async function getAllUserInfo() {
 
   return result.rows;
 }
+
+export { createClient, getAllUserInfo };
