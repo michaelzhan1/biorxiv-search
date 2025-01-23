@@ -1,12 +1,8 @@
-import { createClient } from '../utils/db.js';
+import { createClient, getAllUserInfo } from '../utils/db.js';
 
 export async function getUsers(req, res) {
-  const client = createClient();
-  await client.connect();
-  const result = await client.query('SELECT * FROM users');
-  await client.end();
-
-  res.json(result.rows);
+  const result = await getAllUserInfo();
+  res.json(result);
 }
 
 export async function postUsers(req, res) {

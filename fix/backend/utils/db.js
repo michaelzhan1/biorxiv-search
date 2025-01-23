@@ -9,3 +9,12 @@ export function createClient() {
     connectionString: process.env.DATABASE_URL,
   });
 }
+
+export async function getAllUserInfo() {
+  const client = createClient();
+  await client.connect();
+  const result = await client.query('SELECT * FROM users');
+  await client.end();
+
+  return result.rows;
+}
