@@ -28,6 +28,7 @@ const mailOptions = {
   ]
 }
 
+// Create an HTML email for a given user
 function makeEmailContent(user) {
   const [startDate, endDate] = getDateRange();
   const prettyStartDate = prettyFormat(startDate);
@@ -92,7 +93,7 @@ function makeEmailContent(user) {
   `
 }
 
-// the emails don't need to include actual articles, just a link to the site
+// Send emails using nodemailer
 async function sendEmails() {
   const allUsers = await getAllUserInfo();
 
@@ -109,7 +110,5 @@ async function sendEmails() {
     });
   }
 }
-
-await sendEmails();
 
 export { sendEmails };

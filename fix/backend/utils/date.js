@@ -1,3 +1,4 @@
+// Gets date range for past week in YYYY-MM-DD format
 function getDateRange() {
   const today = new Date();
   const lastWeek = new Date();
@@ -29,8 +30,8 @@ function getDateRange() {
   return [lastWeekString, todayString];
 }
 
+// Pretty format the date from YYYY-MM-DD to MM/DD/YYYY
 function prettyFormat(date) {
-  // Pretty format the date from YYYY-MM-DD to MM/DD/YYYY
   const [year, month, day] = date.split("-");
   return `${month}/${day}/${year}`;
 }

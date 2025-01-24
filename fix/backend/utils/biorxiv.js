@@ -1,20 +1,23 @@
 import { getAllUserInfo } from "./db.js";
 import { getDateRange } from "./date.js"
-import fs from "fs"; // TODO: remove
 
-const userArticles = new Map();
+// Object: key (user id) -> value (array of articles)
+let userArticles = {};
 
-// function use case:
-// on weekly email call, first call all articles, then comb through based on
-// user's search and categories, then store those in a dict
+// Getter for object containing all user articles
+function getUserArticles() {
+  return userArticles;
+}
+
+// Fetch all articles from the last week from bioRxiv via API
 async function fetchAllArticles() {
   const [start, end] = getDateRange();
 
-  // fetch articles
   const articles = [];
 
   let count = 0;
   let total;
+  let upperBound;
   do {
     const response = await fetch(
       `https://api.biorxiv.org/details/biorxiv/${start}/${end}/${count}`
@@ -23,20 +26,25 @@ async function fetchAllArticles() {
     articles.push(...data.collection);
 
     total = parseInt(data.messages[0].total);
+
+    upperBound = count + data.messages[0].count - 1;
+    console.log(`Fetched articles ${count + 1} to ${upperBound + 1} of ${total}`);
+
     count += data.messages[0].count;
   } while (count < total);
 
   return articles;
 }
 
+// Fetch all articles and filter them by user search terms and categories
+// for each user. Uses above function.
 async function fetchUserArticlesInPlace() {
-  // const allArticles = await fetchAllArticles(); // TODO: swap back
-  const allArticles = loadArticles();
+  const allArticles = await fetchAllArticles();
   const allUsers = await getAllUserInfo();
 
-  userArticles.clear();
+  userArticles = {};
   for (let user of allUsers) {
-    userArticles.set(user.id, []);
+    userArticles[user.id] = [];
   }
 
   for (let article of allArticles) {
@@ -50,19 +58,11 @@ async function fetchUserArticlesInPlace() {
         }
 
         if (wordCount >= user.search.split(';').length) {
-          userArticles.get(user.id).push(article);
+          userArticles[user.id].push(article);
         }
       }
     }
   }
 }
 
-
-
-// TODO: remove
-function loadArticles() {
-  const data = fs.readFileSync("./utils/articles.json");
-  return JSON.parse(data);
-}
-
-export { userArticles, fetchUserArticlesInPlace };
+export { getUserArticles, fetchUserArticlesInPlace };
