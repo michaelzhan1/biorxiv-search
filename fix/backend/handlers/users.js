@@ -1,11 +1,13 @@
 import { createClient, getAllUserInfo } from '../utils/db.js';
 
-async function getUsers(req, res) {
+// GET: Retrieve all users
+async function getUserHandler(req, res) {
   const result = await getAllUserInfo();
   res.json(result);
 }
 
-async function postUsers(req, res) {
+// POST: Create or update a user
+async function postUserHandler(req, res) {
   const { email } = req.body;
   const searchTemp = req.body.search.split(' ');
   const categories = req.body.categories.join(';');
@@ -60,7 +62,8 @@ async function postUsers(req, res) {
   res.status(status).json({ message });
 }
 
-async function deleteUsers(req, res) {
+// DELETE: Delete a user
+async function deleteUserHandler(req, res) {
   const id = parseInt(req.body.id);
   if (!id) {
     return res.status(400).json({ message: 'Invalid id' });
@@ -74,4 +77,4 @@ async function deleteUsers(req, res) {
   res.json({ message: `User id ${id} deleted` });
 }
 
-export { getUsers, postUsers, deleteUsers };
+export { getUserHandler, postUserHandler, deleteUserHandler };

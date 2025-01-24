@@ -1,7 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { getUsers, postUsers, deleteUsers } from "./handlers/users.js";
+import { getUserHandler, postUserHandler, deleteUserHandler } from "./handlers/users.js";
+import { getArticleHandler, updateArticleHandler } from "./handlers/data.js";
+import { sendEmailHandler } from "./handlers/email.js";
 
 dotenv.config();
 
@@ -16,10 +18,16 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Routes
-app.get('/users', getUsers);
-app.post('/users', postUsers);
-app.delete('/users', deleteUsers);
+app.get('/users', getUserHandler);
+app.post('/users', postUserHandler);
+app.delete('/users', deleteUserHandler);
 
+app.get('/data', getArticleHandler);
+app.post('/data', updateArticleHandler);
+
+app.post('/email', sendEmailHandler);
+
+// Run
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });
