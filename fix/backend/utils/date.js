@@ -29,4 +29,10 @@ function getDateRange() {
   return [lastWeekString, todayString];
 }
 
-export { getDateRange };
+function prettyFormat(date) {
+  // Pretty format the date from YYYY-MM-DD to MM/DD/YYYY
+  const [year, month, day] = date.split("-");
+  return `${month}/${day}/${year}`;
+}
+
+export { getDateRange, prettyFormat };
