@@ -1,6 +1,8 @@
 import { getAllUserInfo } from "./db.js";
 import { getDateRange } from "./date.js"
-import fs from "fs";
+import fs from "fs"; // TODO: remove
+
+const userArticles = new Map();
 
 // function use case:
 // on weekly email call, first call all articles, then comb through based on
@@ -27,14 +29,14 @@ async function fetchAllArticles() {
   return articles;
 }
 
-async function fetchUserArticles() {
+async function fetchUserArticlesInPlace() {
   // const allArticles = await fetchAllArticles(); // TODO: swap back
   const allArticles = loadArticles();
   const allUsers = await getAllUserInfo();
 
-  const userArticles = {};
+  userArticles.clear();
   for (let user of allUsers) {
-    userArticles[user.id] = [];
+    userArticles.set(user.id, []);
   }
 
   for (let article of allArticles) {
@@ -48,14 +50,14 @@ async function fetchUserArticles() {
         }
 
         if (wordCount >= user.search.split(';').length) {
-          userArticles[user.id].push(article);
+          userArticles.get(user.id).push(article);
         }
       }
     }
   }
-
-  return userArticles;
 }
+
+
 
 // TODO: remove
 function loadArticles() {
@@ -63,4 +65,4 @@ function loadArticles() {
   return JSON.parse(data);
 }
 
-export { fetchUserArticles };
+export { userArticles, fetchUserArticlesInPlace };
