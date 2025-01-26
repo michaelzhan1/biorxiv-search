@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "npx http-server ./ -p 8080"
+    "dev": "npx http-server ./dist -p 8080"
   },
   "keywords": [],
   "author": "",
