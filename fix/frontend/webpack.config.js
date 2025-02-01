@@ -1,15 +1,25 @@
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
-const plugin = require('dotenv-webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    main: ['./src/index.js'],
+    select: ['./src/multiselect-dropdown.js'],
+  },
   output: {
-    filename: 'main.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
     new Dotenv()
   ],
   mode: 'development',
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    compress: true,
+    port: 8080,
+    watchFiles: ['src/**/*.js'],
+  }
 }
