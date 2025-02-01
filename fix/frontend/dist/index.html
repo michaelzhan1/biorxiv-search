@@ -7,18 +7,26 @@
 </head>
 
 <body>
-  <form>
+  <form id="main-form">
     <div>Set a bioRxiv search filter</div>
     <label>Email</label>
-    <input type="email" name="email" required>
+    <input type="email" name="email" required />
     <label>Search Keywords</label>
-    <input type="text" name="search" required>
+    <input type="text" name="search" required />
     <label>Categories</label>
-    <input type="text" name="categories" required> <!-- TODO: multi select-->
+    <!-- <input type="text" name="categories" required /> TODO: multi select -->
+    <select multiple name="categories">
+      <option value="1">1sdfsdf</option>
+      <option value="2">2sdfsdf</option>
+      <option value="3">3sdfsdf</option>
+      <option value="4">4dsdfsdf</option>
+    </select>
+    <button type="submit">Submit</button>
   </form>
   <div id="testDiv"></div>
 
   <script src="main.js"></script>
+  <!-- <script src="select.js"></script> -->
 </body>
 
 </html>
