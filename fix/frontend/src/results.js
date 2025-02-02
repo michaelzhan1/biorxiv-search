@@ -6,11 +6,13 @@ function getId() {
 
   if (!urlParams.get("id")) {
     alert("Missing id");
+    window.location.href = "/index.html";
     return;
   }
 
   if (!numRegex.test(urlParams.get("id"))) {
     alert("Invalid id");
+    window.location.href = "/index.html";
     return;
   }
 
@@ -26,6 +28,8 @@ fetch(`${process.env.API_URL}/users?id=${id}`)
   .then((userInfo) => {
     if (userInfo.length === 0) {
       alert("No user found");
+      window.location.href = "/index.html";
+      return;
     }
 
     const user = userInfo[0];
