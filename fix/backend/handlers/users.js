@@ -1,9 +1,15 @@
-import { createClient, getAllUserInfo } from '../utils/db.js';
+import { createClient, getAllUserInfo, getUserInfo } from '../utils/db.js';
 
 // GET: Retrieve all users
 async function getUserHandler(req, res) {
-  const result = await getAllUserInfo();
-  res.json(result);
+  const id = parseInt(req.query.id);
+  if (!id) {
+    const result = await getAllUserInfo();
+    res.json(result);
+  } else {
+    const result = await getUserInfo(id);
+    res.json(result);
+  }
 }
 
 // POST: Create or update a user

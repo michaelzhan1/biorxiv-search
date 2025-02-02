@@ -1,8 +1,6 @@
 import pg from "pg";
-import dotenv from "dotenv";
 
 const { Client } = pg;
-dotenv.config();
 
 // Create a Postgres client
 function createClient() {
@@ -21,4 +19,14 @@ async function getAllUserInfo() {
   return result.rows;
 }
 
-export { createClient, getAllUserInfo };
+// Get user information for one id
+async function getUserInfo(id) {
+  const client = createClient();
+  await client.connect();
+  const result = await client.query('SELECT * FROM users WHERE id = $1', [id]);
+  await client.end();
+
+  return result.rows;
+}
+
+export { createClient, getAllUserInfo, getUserInfo };
