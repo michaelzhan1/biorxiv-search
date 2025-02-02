@@ -4,7 +4,6 @@ const Dotenv = require('dotenv-webpack');
 module.exports = {
   entry: {
     main: ['./src/index.js'],
-    select: ['./src/multiselect-dropdown.js'],
   },
   output: {
     filename: '[name].js',
