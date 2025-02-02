@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("function handleSubmit(e) {\r\n  e.preventDefault();\r\n\r\n  const formData = new FormData(e.target);\r\n  const email = formData.get(\"email\");\r\n  const keywords = formData.get(\"search\");\r\n  const categories = formData.get(\"categories\");\r\n  console.log(email, keywords, categories);\r\n}\r\n\r\nconst form = document.getElementById(\"main-form\");\r\nform.addEventListener(\"submit\", handleSubmit);\r\n\r\nconst testDiv = document.getElementById(\"testDiv\");\r\ntestDiv.innerHTML = \"test message\";\r\n\n\n//# sourceURL=webpack://fix/./src/index.js?");
+eval("function handleSubmit(e) {\r\n  e.preventDefault();\r\n\r\n  const formData = new FormData(e.target);\r\n  const email = formData.get(\"email\");\r\n  const search = formData.get(\"search\");\r\n\r\n  fetch(\"http://localhost:3000\" + \"/users\", {\r\n    method: \"POST\",\r\n    headers: {\r\n      \"Content-Type\": \"application/json\",\r\n    },\r\n    body: JSON.stringify({\r\n      email: email,\r\n      search: search,\r\n      categories: [],\r\n    }),\r\n  }).then((response) => {\r\n    if (response.ok) {\r\n      alert(\"User created/updated successfully\");\r\n    } else {\r\n      alert(\"An error occurred\");\r\n    }\r\n  });\r\n}\r\n\r\nconst form = document.getElementById(\"main-form\");\r\nform.addEventListener(\"submit\", handleSubmit);\r\n\n\n//# sourceURL=webpack://fix/./src/index.js?");
 
 /***/ })
 
