@@ -1,11 +1,12 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import { getUserHandler, postUserHandler, deleteUserHandler } from "./handlers/users.js";
 import { getArticleHandler, updateArticleHandler } from "./handlers/data.js";
 import { sendEmailHandler } from "./handlers/email.js";
 
-dotenv.config();
 
 // Express setup
 const app = express();
