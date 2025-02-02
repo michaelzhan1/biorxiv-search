@@ -20,7 +20,27 @@ function getId() {
   return id;
 }
 
+function getDateRange() {
+  const today = new Date();
+  const lastWeek = new Date(today);
+  lastWeek.setDate(lastWeek.getDate() - 7);
+
+  const todayDay = today.getDate();
+  const todayMonth = today.getMonth() + 1;
+  const todayYear = today.getFullYear();
+
+  const lastWeekDay = lastWeek.getDate();
+  const lastWeekMonth = lastWeek.getMonth() + 1;
+  const lastWeekYear = lastWeek.getFullYear();
+
+  return [`${lastWeekMonth}/${lastWeekDay}/${lastWeekYear}`, `${todayMonth}/${todayDay}/${todayYear}`];
+}
+
 const id = getId();
+
+// header
+const [today, lastWeek] = getDateRange();
+document.getElementById("header").innerHTML = `Results for ${today} to ${lastWeek}`;
 
 // fetch user data
 fetch(`${process.env.API_URL}/users?id=${id}`)
