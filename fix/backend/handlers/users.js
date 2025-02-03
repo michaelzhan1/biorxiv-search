@@ -70,7 +70,7 @@ async function postUserHandler(req, res) {
 
 // DELETE: Delete a user
 async function deleteUserHandler(req, res) {
-  const id = parseInt(req.body.id);
+  const id = parseInt(req.query.id);
   if (!id) {
     return res.status(400).json({ message: 'Invalid id' });
   }
