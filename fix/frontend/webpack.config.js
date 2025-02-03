@@ -22,11 +22,20 @@ const htmlPlugins = htmlFiles.map((filename) => {
   });
 });
 
+
 module.exports = {
   entry: entry,
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
   },
   plugins: [
     new Dotenv(),
@@ -39,6 +48,6 @@ module.exports = {
     },
     compress: true,
     port: 8080,
-    watchFiles: ['src/**/*.js', 'src/**/*.html'],
+    watchFiles: ['src/js/*.js', 'src/html/*.html', 'src/css/*.css'],
   }
 }
