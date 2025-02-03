@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     main: ['./src/index.js'],
     results: ['./src/results.js'],
+    preferences: ['./src/preferences.js'],
   },
   output: {
     filename: '[name].js',
