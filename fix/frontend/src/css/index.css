@@ -1,3 +1,23 @@
-form {
-    background-color: green;
+#form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: oklch(0.928 0.006 264.531);
+}
+
+#main-form {
+    width: 100%;
+    max-width: 24rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    padding: 2rem;
+}
+
+#form-header {
+    text-align: center;
 }

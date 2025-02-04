@@ -1,3 +1,4 @@
+import '../css/style.css';
 import '../css/index.css';
 
 function handleSubmit(e) {

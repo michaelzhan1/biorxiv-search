@@ -1,3 +1,5 @@
+import '../css/style.css'
+
 const numRegex = /^\d+$/;
 
 function getId() {
