@@ -39,6 +39,11 @@
     margin-top: 0.5rem;
 }
 
+#main-form input:focus {
+    outline: none;
+    border-color: #bdbebf;
+}
+
 #submit-button {
     color: white;
     background-color: #3b82f6;
