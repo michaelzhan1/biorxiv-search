@@ -1,1 +1,1 @@
-Hosted [here](https://biorxiv.michaelzhan.me/)
+A weekly email newsletter to fetch desired bioRxiv articles. Hosted [here](https://biorxiv.michaelzhan.me/)
