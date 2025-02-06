@@ -40,10 +40,6 @@ function getDateRange() {
 
 const id = getId();
 
-// header
-const [today, lastWeek] = getDateRange();
-document.getElementById("header").innerHTML = `Results for ${today} to ${lastWeek}`;
-
 // fetch user data
 fetch(`${process.env.API_URL}/users?id=${id}`)
   .then((response) => response.json())
@@ -70,7 +66,10 @@ fetch(`${process.env.API_URL}/data?id=${id}`)
       alert("No articles found");
     }
 
-    console.log(articles)
+    const articleCount = articles.length;
+    // header
+    const [today, lastWeek] = getDateRange();
+    document.getElementById("header").innerHTML = `Found ${articleCount} articles from ${lastWeek} to ${today}`;
 
     const articleContainer = document.getElementById("article-container");
     articles.forEach((article) => {
