@@ -1,0 +1,45 @@
+html {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+#header {
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+#subtitle {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+#subtitle span:not(:first-child) {
+    margin-left: 1.25rem;
+}
+
+#article-container div:not(:first-child) {
+    border-top: 1px solid gray;
+}
+
+.article-title {
+    margin-bottom: 0;
+}
+
+.authors {
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+    font-size: 0.875rem;
+}
+
+.doi {
+    font-size: 0.875rem;
+    color: black;
+    margin-top: 0.25rem;
+}
+
+.doi:hover {
+    color: gray;
+}

@@ -1,4 +1,4 @@
-import '../css/style.css';
+import '../css/results.css';
 
 const numRegex = /^\d+$/;
 
@@ -55,8 +55,9 @@ fetch(`${process.env.API_URL}/users?id=${id}`)
     }
 
     const user = userInfo[0];
-    document.getElementById("email").innerHTML = user.email;
-    document.getElementById("search").innerHTML = user.search;
+    const searchTerms = user.search.split(';').join(', ');
+    document.getElementById("email").innerHTML = `Email: ${user.email}`;
+    document.getElementById("search").innerHTML = `Search terms: ${searchTerms}`;
     document.getElementById("categories").innerHTML = user.categories;
   });
 
@@ -75,9 +76,9 @@ fetch(`${process.env.API_URL}/data?id=${id}`)
     articles.forEach((article) => {
       const articleElement = document.createElement("div");
       articleElement.innerHTML = `
-        <h2>${article.title}</h2>
-        <p>${article.authors}</p>
-        <a href="https://doi.org/${article.doi}">https://doi.org/${article.doi}</a>
+        <h2 class="article-title">${article.title}</h2>
+        <p class="authors">${article.authors}</p>
+        <a href="https://doi.org/${article.doi}" class="doi">https://doi.org/${article.doi}</a>
         <p>${article.abstract}</p>
       `;
       articleContainer.appendChild(articleElement);
