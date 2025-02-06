@@ -62,7 +62,7 @@ function makeEmailContent(user) {
         </tr>
         <tr>
           <td style="padding-top: 10px;">
-            <a href="${process.env.FRONTEND_URL}/view?id=${user.id}"
+            <a href="${process.env.FRONTEND_URL}/results.html?id=${user.id}"
               style="background-color: #be2736;
                      padding: 10px;
                      margin-top: 10px;
@@ -77,7 +77,7 @@ function makeEmailContent(user) {
         </tr>
         <tr>
           <td style="padding-top: 15px;">
-            <a href="${process.env.FRONTEND_URL}/edit?id=${user.id}"
+            <a href="${process.env.FRONTEND_URL}/preferences.html?id=${user.id}"
               style="color: black;
                      text-decoration: underline;
                      font-size: 12px;"
