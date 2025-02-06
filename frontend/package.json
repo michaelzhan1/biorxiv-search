@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "build": "npx webpack --mode production",
+    "start": "",
     "dev": "npx webpack serve"
   },
   "keywords": [],
